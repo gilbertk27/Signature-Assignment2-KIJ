@@ -27,3 +27,4 @@
     * Extra mark if the signature is embedded in the PDF file
   * The signing app must be able to generate the key pair if the user does not have one
   * Libraries allowed: for generating the key pair, for calculating the hash value, for encryption and decryption
+
