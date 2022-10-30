@@ -1,5 +1,6 @@
 import sys
 import os.path
+from pathlib import Path
 import rsa
 from Crypto.PublicKey import RSA
 from Crypto.Hash import SHA256
@@ -23,21 +24,33 @@ def generate_signature(key, data, sig_f):
     with open(sig_f, 'wb') as f: f.write(signature)
     print("Signature Generated")
 
-# Read all file contents
-isdir = os.path.isdir(key_f)
-if (isdir == True):
-    
-    with open(data_f, 'rb') as f: data = f.read()
-    with open(key_f, 'rb') as f: key = f.read()
+print("Checking Key")
 
-elif (isdir == False):
-    (pubkey, privkey) = rsa.newkeys(2048)
-    with open ('pubkey.key', 'wb') as key_file:
-        key_file.write(pubkey.save_pkcs1('PEM'))
-        
-    with open('privkey.key', 'wb') as key_file:
-        key_file.write(privkey.save_pkcs1('PEM'))
-        key_file = data_f
-        # with open(privkey, 'rb') as f: data = f.read()
+with open(data_f, 'rb') as f: data = f.read()
+with open(key_f, 'rb') as f: key = f.read()
+
+# my_file = Path("/privkey.key")
+# if my_file.is_file():
+#     # file exists
+#     print(my_file)
+# else:
+#     (pubkey, privkey) = rsa.newkeys(2048)
+#     with open ('pubkey.key', 'wb') as key_file:
+#         key_file.write(pubkey.save_pkcs1('PEM'))
+#     with open('privkey.key', 'wb') as key_file:
+#         key_file.write(privkey.save_pkcs1('PEM'))
+#         with open(key_f, 'rb') as f: key = f.read()
+#         with open(privkey, 'rb') as f: data = f.read()
+    
+# if (isdir == True):
+#     with open(key_f, 'rb') as f: key = f.read()
+# elif (isdir == False):
+#     (pubkey, privkey) = rsa.newkeys(2048)
+#     with open ('pubkey.key', 'wb') as key_file:
+#         key_file.write(pubkey.save_pkcs1('PEM'))
+#     with open('privkey.key', 'wb') as key_file:
+#         key_file.write(privkey.save_pkcs1('PEM'))
+#         with open(key_f, 'rb') as f: key = f.read()
+#         # with open(privkey, 'rb') as f: data = f.read()
         
 generate_signature(key, data, sig_f)

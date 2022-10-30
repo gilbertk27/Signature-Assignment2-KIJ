@@ -8,6 +8,10 @@ from cryptography.hazmat.backends import default_backend as crypto_default_backe
 
 with open ('pubkey.key', 'wb') as key_file:
     key_file.write(pubkey.save_pkcs1('PEM'))
+    print("Public Key Created")
+
     
 with open('privkey.key', 'wb') as key_file:
-    key_file.write(privkey.save_pkcs1('PEM'))
+    key_file.write(privkey.save_pkcs1('PEM'))    
+    print("Private Key Created")
+
