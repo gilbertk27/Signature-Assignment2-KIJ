@@ -1,4 +1,6 @@
 import sys
+from threading import Timer
+import time
 import os.path as path
 from pathlib import Path
 import rsa
@@ -24,7 +26,8 @@ else:
     with open('privkey.key', 'wb') as key_file:
         key_file.write(key_f.save_pkcs1('PEM'))    
         print("Private Key Created")
-        with open('privkey.key', mode='rb') as key:
+        time.sleep(5)
+    with open('privkey.key', mode='rb') as key:
         key_f = key.read()
         print(key_f)   
     
