@@ -1,29 +1,13 @@
-from contextlib import redirect_stdout
+import rsa
 from cryptography.hazmat.primitives import serialization as crypto_serialization
-from cryptography.hazmat.primitives.asymmetric import rsa
+# from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.backends import default_backend as crypto_default_backend
 
-key = rsa.generate_private_key(
-    backend=crypto_default_backend(),
-    public_exponent=65537,
-    key_size=2048
-)
+# # source tutorial-env/bin/activate
+(pubkey, privkey) = rsa.newkeys(2048)
 
-private_key = key.private_bytes(
-    crypto_serialization.Encoding.PEM,
-    crypto_serialization.PrivateFormat.PKCS8,
-    crypto_serialization.NoEncryption()
-)
-        
-public_key = key.public_key().public_bytes(
-    crypto_serialization.Encoding.OpenSSH,
-    crypto_serialization.PublicFormat.OpenSSH
-)
-
-with open('pubkey.out', 'w') as f:
-    with redirect_stdout(f):
-        print(public_key)
-
-with open('privkey.out', 'w') as f:
-    with redirect_stdout(f):
-        print(private_key)
+with open ('pubkey.key', 'wb') as key_file:
+    key_file.write(pubkey.save_pkcs1('PEM'))
+    
+with open('privkey.key', 'wb') as key_file:
+    key_file.write(privkey.save_pkcs1('PEM'))
