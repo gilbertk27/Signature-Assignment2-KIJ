@@ -3,7 +3,7 @@ from Crypto.PublicKey import RSA
 from Crypto.Hash import SHA256
 from Crypto.Signature import PKCS1_v1_5
 
-# python script.py privkey.key MAP.pdf signature.sig
+# python 2_generate.py privkey.key MAP.pdf signature.sig
 
 if (len(sys.argv) < 4):
     quit()
