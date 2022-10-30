@@ -1,16 +1,29 @@
-import sys
-from Crypto.PublicKey import RSA
 from contextlib import redirect_stdout
+from cryptography.hazmat.primitives import serialization as crypto_serialization
+from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.backends import default_backend as crypto_default_backend
 
-print("Generating Public & Private Key")
-key = RSA.generate(2048)
-p_key = key.publickey().exportKey("PEM")
-priv_key = key.exportKey("PEM")
+key = rsa.generate_private_key(
+    backend=crypto_default_backend(),
+    public_exponent=65537,
+    key_size=2048
+)
+
+private_key = key.private_bytes(
+    crypto_serialization.Encoding.PEM,
+    crypto_serialization.PrivateFormat.PKCS8,
+    crypto_serialization.NoEncryption()
+)
+        
+public_key = key.public_key().public_bytes(
+    crypto_serialization.Encoding.OpenSSH,
+    crypto_serialization.PublicFormat.OpenSSH
+)
 
 with open('pubkey.out', 'w') as f:
     with redirect_stdout(f):
-        print(p_key)
-        
+        print(public_key)
+
 with open('privkey.out', 'w') as f:
     with redirect_stdout(f):
-        print(priv_key)
+        print(private_key)
